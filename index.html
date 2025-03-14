@@ -61,27 +61,25 @@
         .carousel-container {
             width: 100%;
             margin-top: 450px; /* Spazio per evitare che il cuore copra il contenuto */
+            overflow: hidden; /* Nasconde la parte non visibile del carosello */
         }
 
         .carousel {
             display: flex;
-            flex-direction: column;
+            flex-direction: row; /* Cambia da colonna a riga per lo scorrimento orizzontale */
             align-items: center;
-            margin-bottom: 100px;
+            transition: transform 1s ease;
         }
 
         .carousel img, .carousel video {
-            width: 80%;
-            height: 500px; /* Impostato una larghezza fissa */
+            width: 100%; /* Adatta le dimensioni al 100% del contenitore */
+            height: 500px;
             object-fit: cover;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 1s, transform 1s;
         }
 
         .carousel img.active, .carousel video.active {
             opacity: 1;
-            transform: translateY(0); /* Effetto di scorrimento delle immagini/video */
+            transform: translateX(0); /* Posizionamento orizzontale */
         }
 
     </style>
@@ -116,6 +114,7 @@
     <script>
         let index = 0;
         const items = document.querySelectorAll(".carousel img, .carousel video");
+        const carousel = document.querySelector(".carousel");
 
         function changeSlide() {
             // Rimuovi la classe "active" dall'elemento precedente
@@ -126,9 +125,12 @@
 
             // Aggiungi la classe "active" al nuovo elemento
             items[index].classList.add("active");
+
+            // Muovi il carosello per mostrare il prossimo elemento
+            carousel.style.transform = `translateX(-${index * 100}%)`;
         }
 
-        // Cambia immagine/video ogni 3 secondi
+        // Cambia immagine/video ogni 5 secondi
         setInterval(changeSlide, 5000);
 
         // Funzione per capovolgere il cuore
