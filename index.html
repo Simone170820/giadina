@@ -21,16 +21,16 @@
         }
 
         .heart-container {
-    position: fixed; /* Il cuore rimane fisso mentre si scorre il resto della pagina */
-    top: 50%; /* Centrato verticalmente */
-    left: 50%; /* Centrato orizzontalmente */
-    transform: translate(-50%, -50%); /* Centro esatto rispetto al suo punto centrale */
-    width: 400px;
-    height: 400px;
-    perspective: 1000px;
-    cursor: pointer;
-    z-index: 10; /* Rende il cuore sempre visibile sopra gli altri contenuti */
-}
+            position: fixed; /* Il cuore rimane fisso mentre si scorre il resto della pagina */
+            top: 50%; /* Centrato verticalmente */
+            left: 50%; /* Centrato orizzontalmente */
+            transform: translate(-50%, -50%); /* Centro esatto rispetto al suo punto centrale */
+            width: 400px;
+            height: 400px;
+            perspective: 1000px;
+            cursor: pointer;
+            z-index: 10; /* Rende il cuore sempre visibile sopra gli altri contenuti */
+        }
 
         .heart-card {
             width: 100%;
@@ -98,7 +98,7 @@
     </div>
 
     <!-- Musica di sottofondo -->
-    <audio id="backgroundMusic" loop autoplay>
+    <audio id="backgroundMusic" loop>
         <source src="Olly - Balorda nostalgia (Official Video - Sanremo 2025).mp3" type="audio/mpeg">
         Il tuo browser non supporta l'elemento audio.
     </audio>
@@ -137,12 +137,18 @@
             heartCard.classList.toggle("flipped");
             heartCard.style.transform = heartCard.classList.contains("flipped") ? "rotateY(180deg)" : "rotateY(0deg)";
 
-            // Avvia la musica quando il cuore viene cliccato
+            // Avvia la musica solo la prima volta
             const backgroundMusic = document.getElementById("backgroundMusic");
             if (backgroundMusic.paused) {
                 backgroundMusic.play();
             }
         }
+
+        // La musica parte appena il sito viene caricato, ma solo una volta
+        window.addEventListener('load', () => {
+            const backgroundMusic = document.getElementById("backgroundMusic");
+            backgroundMusic.play();
+        });
     </script>
 </body>
 </html>
