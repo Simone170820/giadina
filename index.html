@@ -97,7 +97,7 @@
 
         .carousel-container {
             width: 100%;
-            margin-top: 450px;
+            margin-top: 50px;
             overflow: hidden;
         }
 
@@ -112,6 +112,7 @@
             width: 100%;
             height: auto;
             object-fit: cover;
+            transition: opacity 1s, transform 1s;
         }
 
         .carousel img.active {
@@ -120,13 +121,13 @@
         }
 
         .video-container {
-            margin-top: 50px;
+            margin-top: 20px;
             text-align: center;
         }
 
         video {
-            width: 90%;
-            max-width: 400px;
+            width: 100%;
+            max-width: 100%;
             height: auto;
         }
 
@@ -179,6 +180,11 @@
         .close-btn:hover {
             background-color: #ff4d4d;
         }
+
+        /* Nascondi il contenuto fino al click del tasto "Prosegui" */
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -189,7 +195,7 @@
     </div>
 
     <!-- Contenitore del cuore -->
-    <div class="heart-container" onclick="flipHeart()">
+    <div class="heart-container hidden" id="heartContainer" onclick="flipHeart()">
         <div class="heart-card" id="heartCard">
             <div class="heart-front"></div>
             <div class="heart-back"></div>
@@ -203,7 +209,7 @@
     </audio>
 
     <!-- Carosello di immagini -->
-    <div class="carousel-container">
+    <div class="carousel-container hidden" id="carouselContainer">
         <div class="carousel">
             <img src="Immagine WhatsApp 2025-03-05 ore 14.41.52_2c26e3d9.jpg" class="active">
             <img src="Immagine WhatsApp 2025-03-05 ore 14.41.52_de4448ac.jpg">
@@ -212,7 +218,7 @@
     </div>
 
     <!-- Video posizionati in fondo -->
-    <div class="video-container">
+    <div class="video-container hidden" id="videoContainer">
         <video src="Video WhatsApp 2025-03-05 ore 14.42.00_244f3ed5.mp4" controls></video>
         <video src="Video WhatsApp 2025-03-05 ore 14.42.00_d513587b.mp4" controls></video>
     </div>
@@ -272,22 +278,25 @@
 
         // Funzione per proseguire alla pagina principale
         const proseguiButton = document.getElementById("proseguiButton");
-        proseguiButton.addEventListener('click', () => {
-            const introSection = document.getElementById("introSection");
-            introSection.style.display = "none"; // Nasconde la sezione iniziale
+        proseguiButton.addEventListener("click", () => {
+            // Mostra la sezione successiva
+            document.getElementById("heartContainer").classList.remove("hidden");
+            document.getElementById("carouselContainer").classList.remove("hidden");
+            document.getElementById("videoContainer").classList.remove("hidden");
+
+            // Nascondi la sezione intro
+            document.getElementById("introSection").classList.add("hidden");
+
+            // Mostra il pop-up per Giada
+            setTimeout(() => {
+                document.getElementById("giadaPopup").style.display = "flex";
+            }, 10000); // Mostra il pop-up dopo 10 secondi
         });
 
-        // Mostra il pop-up dopo 5 minuti
-        setTimeout(() => {
-            const popup = document.getElementById("giadaPopup");
-            popup.style.display = "flex";
-        }, 300000); // 300000 ms = 5 minuti
-
-        // Funzione per chiudere il pop-up
+        // Chiudi il pop-up per Giada
         const closePopupBtn = document.getElementById("closePopupBtn");
-        closePopupBtn.addEventListener('click', () => {
-            const popup = document.getElementById("giadaPopup");
-            popup.style.display = "none";
+        closePopupBtn.addEventListener("click", () => {
+            document.getElementById("giadaPopup").style.display = "none";
         });
     </script>
 </body>
