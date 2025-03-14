@@ -9,7 +9,7 @@
             font-family: Arial, sans-serif;
             background-color: #ffe6e6;
             margin: 0;
-            overflow-y: scroll; /* Consente lo scrolling della pagina */
+            overflow-y: scroll;
         }
 
         .title {
@@ -21,15 +21,15 @@
         }
 
         .heart-container {
-            position: fixed; /* Il cuore rimane fisso mentre si scorre il resto della pagina */
-            top: 50%; /* Centrato verticalmente */
-            left: 50%; /* Centrato orizzontalmente */
-            transform: translate(-50%, -50%); /* Centro esatto rispetto al suo punto centrale */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             width: 400px;
             height: 400px;
             perspective: 1000px;
             cursor: pointer;
-            z-index: 10; /* Rende il cuore sempre visibile sopra gli altri contenuti */
+            z-index: 10;
         }
 
         .heart-card {
@@ -50,42 +50,143 @@
         }
 
         .heart-front {
-            background-image: url(cuore_avanti.png); /* Sostituisci con il tuo percorso immagine */
+            background-image: url(cuore_avanti.png);
         }
 
         .heart-back {
             transform: rotateY(180deg);
-            background-image: url(cuore_dietro.png); /* Sostituisci con il tuo percorso immagine */
+            background-image: url(cuore_dietro.png);
+        }
+
+        .intro-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #ffe6e6;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .intro-section.active {
+            opacity: 1;
+        }
+
+        .intro-title {
+            font-size: 36px;
+            color: darkred;
+            margin-bottom: 20px;
+        }
+
+        .intro-button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: darkred;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .intro-button:hover {
+            background-color: #ff4d4d;
         }
 
         .carousel-container {
             width: 100%;
-            margin-top: 450px; /* Spazio per evitare che il cuore copra il contenuto */
-            overflow: hidden; /* Nasconde la parte non visibile del carosello */
+            margin-top: 450px;
+            overflow: hidden;
         }
 
         .carousel {
             display: flex;
-            flex-direction: row; /* Cambia da colonna a riga per lo scorrimento orizzontale */
+            flex-direction: row;
             align-items: center;
             transition: transform 1s ease;
         }
 
-        .carousel img, .carousel video {
-            width: 100%; /* Adatta le dimensioni al 100% del contenitore */
-            height: 500px;
+        .carousel img {
+            width: 100%;
+            height: auto;
             object-fit: cover;
         }
 
-        .carousel img.active, .carousel video.active {
+        .carousel img.active {
             opacity: 1;
-            transform: translateX(0); /* Posizionamento orizzontale */
+            transform: translateX(0);
         }
 
+        .video-container {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        video {
+            width: 90%;
+            max-width: 400px;
+            height: auto;
+        }
+
+        /* Pop-up per Giada */
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 20;
+        }
+
+        .popup-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+        }
+
+        .popup-title {
+            font-size: 30px;
+            color: darkred;
+            margin-bottom: 20px;
+        }
+
+        .popup-text {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .close-btn {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: darkred;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .close-btn:hover {
+            background-color: #ff4d4d;
+        }
     </style>
 </head>
 <body>
-    <div class="title">Per Giadina ❤️</div>
+    <!-- Sezione intro -->
+    <div class="intro-section" id="introSection">
+        <div class="intro-title">Prota Giadina ❤️</div>
+        <button class="intro-button" id="proseguiButton">Prosegui</button>
+    </div>
 
     <!-- Contenitore del cuore -->
     <div class="heart-container" onclick="flipHeart()">
@@ -101,36 +202,49 @@
         Il tuo browser non supporta l'elemento audio.
     </audio>
 
-    <!-- Carosello di immagini e video -->
+    <!-- Carosello di immagini -->
     <div class="carousel-container">
         <div class="carousel">
             <img src="Immagine WhatsApp 2025-03-05 ore 14.41.52_2c26e3d9.jpg" class="active">
-            <video src="Video WhatsApp 2025-03-05 ore 14.42.00_244f3ed5.mp4" controls></video>
             <img src="Immagine WhatsApp 2025-03-05 ore 14.41.52_de4448ac.jpg">
-            <video src="Video WhatsApp 2025-03-05 ore 14.42.00_d513587b.mp4" controls></video>
+            <img src="Immagine WhatsApp 2025-03-05 ore 14.41.52_2c26e3d9.jpg">
+        </div>
+    </div>
+
+    <!-- Video posizionati in fondo -->
+    <div class="video-container">
+        <video src="Video WhatsApp 2025-03-05 ore 14.42.00_244f3ed5.mp4" controls></video>
+        <video src="Video WhatsApp 2025-03-05 ore 14.42.00_d513587b.mp4" controls></video>
+    </div>
+
+    <!-- Pop-up per Giada -->
+    <div class="popup" id="giadaPopup">
+        <div class="popup-content">
+            <div class="popup-title">Giada, per te ci sarò sempre ❤️</div>
+            <div class="popup-text">
+                Questo sito è stato creato con tanto amore. 🥰
+                <br>
+                <br>
+                Creato da: <strong>Simone Pontillo</strong> (o chi vuoi scrivere qui).
+            </div>
+            <button class="close-btn" id="closePopupBtn">Chiudi</button>
         </div>
     </div>
 
     <script>
         let index = 0;
-        const items = document.querySelectorAll(".carousel img, .carousel video");
+        const items = document.querySelectorAll(".carousel img");
         const carousel = document.querySelector(".carousel");
 
+        // Funzione per cambiare le immagini del carosello
         function changeSlide() {
-            // Rimuovi la classe "active" dall'elemento precedente
             items[index].classList.remove("active");
-
-            // Aumenta l'indice e torna all'inizio se raggiunge la fine
             index = (index + 1) % items.length;
-
-            // Aggiungi la classe "active" al nuovo elemento
             items[index].classList.add("active");
-
-            // Muovi il carosello per mostrare il prossimo elemento
             carousel.style.transform = `translateX(-${index * 100}%)`;
         }
 
-        // Cambia immagine/video ogni 5 secondi
+        // Cambia immagine ogni 5 secondi
         setInterval(changeSlide, 5000);
 
         // Funzione per capovolgere il cuore
@@ -146,10 +260,34 @@
             }
         }
 
-        // La musica parte appena il sito viene caricato, ma solo una volta
+        // Mostra la sezione "Prota Giadina" appena caricato il sito
         window.addEventListener('load', () => {
+            const introSection = document.getElementById("introSection");
+            introSection.classList.add("active");
+
+            // Avvia la musica subito
             const backgroundMusic = document.getElementById("backgroundMusic");
             backgroundMusic.play();
+        });
+
+        // Funzione per proseguire alla pagina principale
+        const proseguiButton = document.getElementById("proseguiButton");
+        proseguiButton.addEventListener('click', () => {
+            const introSection = document.getElementById("introSection");
+            introSection.style.display = "none"; // Nasconde la sezione iniziale
+        });
+
+        // Mostra il pop-up dopo 5 minuti
+        setTimeout(() => {
+            const popup = document.getElementById("giadaPopup");
+            popup.style.display = "flex";
+        }, 300000); // 300000 ms = 5 minuti
+
+        // Funzione per chiudere il pop-up
+        const closePopupBtn = document.getElementById("closePopupBtn");
+        closePopupBtn.addEventListener('click', () => {
+            const popup = document.getElementById("giadaPopup");
+            popup.style.display = "none";
         });
     </script>
 </body>
